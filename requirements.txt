@@ -1,0 +1,6 @@
+pytest
+allure-pytest
+requests
+dynaconf
+pydantic
+pytest-lazy-fixture
