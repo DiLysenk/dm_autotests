@@ -26,6 +26,3 @@ def post_v1_account_login():
         json=payload
     )
     return response
-
-r = post_v1_account_login()
-print()

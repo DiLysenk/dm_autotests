@@ -20,5 +20,3 @@ def delete_v1_account_login():
         headers=headers
     )
     return response
-f= delete_v1_account_login()
-print()

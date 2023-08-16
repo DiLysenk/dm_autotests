@@ -22,6 +22,3 @@ def get_v1_account():
         json=payload
     )
     return response
-
-r =get_v1_account()
-print()
