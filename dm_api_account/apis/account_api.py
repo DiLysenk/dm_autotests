@@ -2,18 +2,6 @@ from requests import session, Response
 
 from config import settings as cfg
 
-payload = {
-    "login": cfg.user.login,
-    "email": cfg.user.email,
-    "password": cfg.user.password
-}
-headers = {
-    'X-Dm-Auth-Token': '',
-    'X-Dm-Bb-Render-Mode': '',
-    'Content-Type': 'application/json',
-    'Accept': 'text/plain'
-}
-
 
 class AccountApi:
 
