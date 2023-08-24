@@ -1,29 +1,27 @@
-import requests
+from random import randint
+
 from config import settings as cfg
 
-def put_v1_account_email():
-    """
-    Change registered user email
-    :return:
-    """
-    url = "http://5.63.153.31:5051/v1/account/email"
+from services.dm_api_account import DmApiAccount
+import structlog
+from services.mailhog import MailhogApi
 
-    payload = {
-        "login": cfg.user.login,
-        "password": cfg.user.password,
-        "email": cfg.user.email
-    }
-    headers = {
-        'X-Dm-Auth-Token': '',
-        'X-Dm-Bb-Render-Mode': '',
-        'Content-Type': 'application/json',
-        'Accept': 'text/plain'
-    }
+structlog.configure(
+    processors=[
+        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
+    ]
+)
 
-    response = requests.request(
-        method="PUT",
-        url=url,
-        headers=headers,
-        json=payload
-    )
-    return response
+payload = {
+    "login": cfg.user.login,
+    "email": cfg.user.email + str({randint(0, 55)}),
+    "password": cfg.user.password
+}
+
+def test_put_v1_account_email():
+    mailhog = MailhogApi()
+    api = DmApiAccount()
+    response = api.account.put_v1_account_email(json=payload)
+    assert response.status_code == 200, f'expected 200 but equals {response.status_code}'
+    token = mailhog.get_token_from_last_email()
+    api.account.put_v1_account_token(token=token)

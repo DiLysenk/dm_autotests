@@ -4,3 +4,5 @@ requests
 dynaconf
 pydantic
 pytest-lazy-fixture
+structlog
+curlify
