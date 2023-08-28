@@ -12,8 +12,7 @@ structlog.configure(
     ]
 )
 
-@pytest.mark.usefixtures('activate_user')
-def test_put_v1_account_email(api, credentials):
+def test_put_v1_account_email(api, credentials, activate_user):
     payload = {
         "login": credentials['login'],
         "password": credentials['password'],
