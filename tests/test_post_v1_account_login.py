@@ -1,13 +1,4 @@
-from config import settings as cfg
-
-from services.dm_api_account import DmApiAccount
 import structlog
-
-payload = {
-    "login": cfg.user.login,
-    "password": cfg.user.password,
-    "rememberMe": True
-}
 
 structlog.configure(
     processors=[
@@ -16,7 +7,11 @@ structlog.configure(
 )
 
 
-def test_post_v1_account_login():
-    api = DmApiAccount()
+def test_post_v1_account_login(api, activate_user, credentials):
+    payload = {
+        "login": credentials['login'],
+        "password": credentials['password'],
+        "rememberMe": True
+    }
     response = api.login.post_v1_account_login(json=payload)
     assert response.status_code == 200, f'expected 200 but equals {response.status_code}'
