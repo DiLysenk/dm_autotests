@@ -58,3 +58,5 @@ def activate_user(api, mailhog, create_user):
     response = api.account.put_v1_account_token(token=token)
     sleep(2)
     assert response.status_code == 200
+    return response
+
