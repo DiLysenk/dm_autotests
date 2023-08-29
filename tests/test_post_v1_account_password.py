@@ -1,16 +1,18 @@
 import requests
 from config import settings as cfg
+from dm_api_account.apis.models.reset_registred_user_password_model import ResponseAccountPassword, \
+    RequestAccountPassword
 
-def post_v1_account_password():
+
+def test_post_v1_account_password(api, create_user, activate_user, get_credentials):
     """
     Reset registered user password
     :return:
     """
-    url = "http://5.63.153.31:5051/v1/account/password"
 
     payload = {
-        "login": cfg.user.login,
-        "email": cfg.user.email
+        "login": get_credentials.login,
+        "email": get_credentials.password
     }
     headers = {
         'X-Dm-Auth-Token': '',
@@ -19,10 +21,8 @@ def post_v1_account_password():
         'Accept': 'text/plain'
     }
 
-    response = requests.request(
-        method="POST",
-        url=url,
+    response = api.account.post_v1_account_password(
         headers=headers,
-        json=payload
+        json=RequestAccountPassword(**payload)
     )
-    return response
+    assert response.status_code == 200

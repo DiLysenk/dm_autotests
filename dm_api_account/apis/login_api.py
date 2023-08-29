@@ -1,5 +1,7 @@
 from requests import session, Response
 
+from dm_api_account.apis.models.auth_via_credentials import ResponseLoginCredentials
+
 
 class LoginApi:
 
@@ -20,6 +22,7 @@ class LoginApi:
             json=json,
             **kwargs
         )
+        ResponseLoginCredentials.model_validate(response.json())
         return response
 
     def delete_v1_account_login(self, **kwargs):
@@ -32,6 +35,7 @@ class LoginApi:
             url=f"{self.host}/v1/account/login",
             **kwargs
         )
+
         return response
 
     def delete_v1_account_login_all(self, **kwargs):

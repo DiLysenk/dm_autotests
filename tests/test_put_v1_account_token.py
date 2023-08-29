@@ -1,5 +1,7 @@
 import structlog
 
+from dm_api_account.apis.models.activate_registered_user_model import ResponseActivated
+
 structlog.configure(
     processors=[
         structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)

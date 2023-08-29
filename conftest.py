@@ -1,11 +1,10 @@
 from time import sleep
 
 import pytest
-from random import randint
 
 import structlog
 
-from config import settings as cfg
+from dm_api_account.apis.models.regisration_user_model import RegistrationModel
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
 
@@ -17,12 +16,8 @@ structlog.configure(
 
 
 @pytest.fixture()
-def credentials():
-    return {
-        "login": cfg.user.login + str({randint(0, 55)}),
-        "email": cfg.user.email + str({randint(0, 55)}),
-        "password": cfg.user.password
-    }
+def get_credentials():
+    return RegistrationModel()
 
 
 @pytest.fixture()
@@ -36,12 +31,13 @@ def mailhog():
 
 
 @pytest.fixture()
-def create_user(api, credentials):
+def create_user(api, get_credentials):
     """
+    :param get_credentials:
     :param api:
     :return:
     """
-    response = api.account.post_v1_account(json=credentials)
+    response = api.account.post_v1_account(json=get_credentials)
     assert response.status_code == 201
     return response
 
@@ -58,5 +54,4 @@ def activate_user(api, mailhog, create_user):
     response = api.account.put_v1_account_token(token=token)
     sleep(2)
     assert response.status_code == 200
-    return response
-
+    return token
