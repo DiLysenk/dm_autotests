@@ -1,10 +1,5 @@
-from random import randint
-
-import pytest
-
-from config import settings as cfg
-
 import structlog
+from config import settings as cfg
 
 from dm_api_account.apis.models.change_email_model import RequestChangeEmailModel
 
@@ -13,6 +8,7 @@ structlog.configure(
         structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
     ]
 )
+
 
 def test_put_v1_account_email(api, get_credentials, activate_user):
     payload = {

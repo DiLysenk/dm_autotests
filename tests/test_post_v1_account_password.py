@@ -1,7 +1,4 @@
-import requests
-from config import settings as cfg
-from dm_api_account.apis.models.reset_registred_user_password_model import ResponseAccountPassword, \
-    RequestAccountPassword
+from dm_api_account.apis.models.reset_registred_user_password_model import RequestAccountPassword
 
 
 def test_post_v1_account_password(api, create_user, activate_user, get_credentials):

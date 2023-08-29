@@ -18,3 +18,4 @@ def test_delete_v1_account_login_all(api):
     response = api.login.delete_v1_account_login_all(
         headers=headers,
     )
+    assert response.status_code == 204

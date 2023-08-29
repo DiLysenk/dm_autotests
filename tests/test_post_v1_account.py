@@ -9,7 +9,8 @@ structlog.configure(
 )
 
 
-def test_post_v1_account(api, mailhog):
+def test_post_v1_account(api):
     response = api.account.post_v1_account(json=RegistrationModel())
     assert response.status_code == 201,\
         f'expected 201 but equals {response.status_code}, \n{response.json(indent=2)}'
+

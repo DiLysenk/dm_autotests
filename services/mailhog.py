@@ -4,6 +4,7 @@ from requests import Response
 from restclient.restclient import Restclient
 from config import settings as cfg
 
+
 class MailhogApi:
     def __init__(self, host=cfg.user.mail_host):
         self.host = host
