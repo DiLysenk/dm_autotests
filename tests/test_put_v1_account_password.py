@@ -8,7 +8,7 @@ def test_put_v1_account_password(api, create_user, activate_user, get_credential
     """
     payload = {
         "login": get_credentials.login,
-        "token": create_user,
+        "token": activate_user,
         "oldPassword": get_credentials.password,
         "newPassword": get_credentials.password + '99'
     }

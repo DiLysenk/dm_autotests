@@ -15,7 +15,7 @@ structlog.configure(
 )
 
 
-@pytest.fixture()
+@pytest.fixture(scope='session')
 def get_credentials():
     return RegistrationModel()
 
