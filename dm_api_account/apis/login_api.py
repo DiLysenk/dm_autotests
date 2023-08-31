@@ -1,6 +1,7 @@
 from requests import session, Response
 
 from dm_api_account.apis.models.auth_via_credentials import ResponseLoginCredentials
+from utilities import validate_request_json, validate_status_code_func
 
 
 class LoginApi:
@@ -11,7 +12,7 @@ class LoginApi:
         self.session = session()
         self.session.headers.update(headers) if headers else None
 
-    def post_v1_account_login(self, json, **kwargs) -> Response:
+    def post_v1_account_login(self, json, status_code=201, **kwargs) -> Response:
         """
         Authenticate via credentials
         :return:
@@ -19,10 +20,12 @@ class LoginApi:
 
         response = self.session.post(
             url=f"{self.host}/v1/account/login",
-            json=json,
+            json=validate_request_json(json),
             **kwargs
         )
-        ResponseLoginCredentials.model_validate(response.json())
+        validate_status_code_func(response, status_code)
+        if response.status_code == status_code:
+            return ResponseLoginCredentials.model_validate(response.json())
         return response
 
     def delete_v1_account_login(self, **kwargs):
@@ -38,7 +41,7 @@ class LoginApi:
 
         return response
 
-    def delete_v1_account_login_all(self, **kwargs):
+    def delete_v1_account_login_all(self, status_code=204, **kwargs):
         """
         Logout from every device
         :return:
@@ -48,4 +51,6 @@ class LoginApi:
             url=f"{self.host}/v1/account/login/all",
             **kwargs
         )
+        validate_status_code_func(response, status_code)
+
         return response
