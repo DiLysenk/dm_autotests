@@ -1,30 +1,19 @@
-import requests
-from config import settings as cfg
+from dm_api_account.apis.models.change_registered_user_password_model import RequestRegisteredUserPassword
 
-def put_v1_account_password():
+
+def test_put_v1_account_password(api, create_user, activate_user, get_credentials):
     """
     Change registered user password
     :return:
     """
-    url = "http://5.63.153.31:5051/v1/account/password"
-
     payload = {
-        "login": cfg.user.login,
-        "token": "c0fee269-5383-430d-855a-c87add9a6c6d",
-        "oldPassword": cfg.user.password,
-        "newPassword": cfg.user.password + '99'
-    }
-    headers = {
-        'X-Dm-Auth-Token': '',
-        'X-Dm-Bb-Render-Mode': '',
-        'Content-Type': 'application/json',
-        'Accept': 'text/plain'
+        "login": get_credentials.login,
+        "token": activate_user,
+        "oldPassword": get_credentials.password,
+        "newPassword": get_credentials.password + '99'
     }
 
-    response = requests.request(
-        method="PUT",
-        url=url,
-        headers=headers,
-        json=payload
+    response = api.account.put_v1_account_password(
+        json=RequestRegisteredUserPassword(**payload)
     )
-    return response
+    assert response.status_code == 200

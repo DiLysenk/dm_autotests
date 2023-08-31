@@ -1,29 +1,20 @@
-import requests
+import structlog
 from config import settings as cfg
 
-def put_v1_account_email():
-    """
-    Change registered user email
-    :return:
-    """
-    url = "http://5.63.153.31:5051/v1/account/email"
+from dm_api_account.apis.models.change_email_model import RequestChangeEmailModel
 
+structlog.configure(
+    processors=[
+        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
+    ]
+)
+
+
+def test_put_v1_account_email(api, get_credentials, activate_user):
     payload = {
-        "login": cfg.user.login,
-        "password": cfg.user.password,
-        "email": cfg.user.email
+        "login": get_credentials.login,
+        "password": get_credentials.password,
+        "email": 'changed' + cfg.user.email
     }
-    headers = {
-        'X-Dm-Auth-Token': '',
-        'X-Dm-Bb-Render-Mode': '',
-        'Content-Type': 'application/json',
-        'Accept': 'text/plain'
-    }
-
-    response = requests.request(
-        method="PUT",
-        url=url,
-        headers=headers,
-        json=payload
-    )
-    return response
+    response = api.account.put_v1_account_email(json=RequestChangeEmailModel(**payload))
+    assert response.status_code == 200, f'expected 200 but equals {response.status_code}'

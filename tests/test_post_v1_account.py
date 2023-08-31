@@ -1,16 +1,16 @@
-from config import settings as cfg
-from services.dm_api_account import DmApiAccount
+import structlog
 
-payload = {
-    "login": cfg.user.login,
-    "email": cfg.user.email,
-    "password": cfg.user.password
-}
+from dm_api_account.apis.models.regisration_user_model import RegistrationModel
+
+structlog.configure(
+    processors=[
+        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
+    ]
+)
 
 
-def test_post_v1_account():
-    api = DmApiAccount(host=f'{cfg.user.host}')
-    response = api.account.post_v1_account(
-        json=payload
-    )
-    assert response.status_code == 201
+def test_post_v1_account(api):
+    response = api.account.post_v1_account(json=RegistrationModel())
+    assert response.status_code == 201,\
+        f'expected 201 but equals {response.status_code}, \n{response.json(indent=2)}'
+
