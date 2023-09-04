@@ -1,8 +1,3 @@
-import requests
-
-from dm_api_account.apis.models.logout_from_every_device_model import ResponseLogoutEveryDevice
-
-
 def test_delete_v1_account_login_all(api):
     """
     Logout from every device

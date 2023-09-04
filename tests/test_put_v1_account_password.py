@@ -1,4 +1,4 @@
-from dm_api_account.apis.models.change_registered_user_password_model import RequestRegisteredUserPassword
+from dm_api_account.apis.models.change_registered_user_password_model import ChangePassword
 
 
 def test_put_v1_account_password(api, create_user, activate_user, get_credentials):
@@ -12,8 +12,4 @@ def test_put_v1_account_password(api, create_user, activate_user, get_credential
         "oldPassword": get_credentials.password,
         "newPassword": get_credentials.password + '99'
     }
-
-    response = api.account.put_v1_account_password(
-        json=RequestRegisteredUserPassword(**payload)
-    )
-    assert response.status_code == 200
+    api.account.put_v1_account_password(json=ChangePassword(**payload))

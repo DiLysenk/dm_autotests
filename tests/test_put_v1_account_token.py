@@ -10,6 +10,6 @@ structlog.configure(
 )
 
 
-def test_put_v1_account_token():
+def test_put_v1_account_token(activate_user):
     api = DmApiAccount(host=cfg.user.host)
-    api.account.put_v1_account_token(token=cfg.user.token)
+    api.account.put_v1_account_token(token=activate_user)

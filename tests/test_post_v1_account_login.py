@@ -1,7 +1,7 @@
 import structlog
+from hamcrest import assert_that, has_properties
 
-
-from dm_api_account.apis.models.auth_via_credentials import RequestLoginCredentials
+from dm_api_account.apis.models.auth_via_credentials import LoginCredentials
 
 structlog.configure(
     processors=[
@@ -16,5 +16,5 @@ def test_post_v1_account_login(api, activate_user, get_credentials):
         "password": get_credentials.password,
         "rememberMe": True
     }
-    response = api.login.post_v1_account_login(json=RequestLoginCredentials(**payload))
-    assert response.status_code == 200, f'expected 200 but equals {response.status_code}'
+    response = api.login.post_v1_account_login(json=LoginCredentials(**payload))
+    assert_that(response.resource,has_properties({"login": get_credentials.login}))
