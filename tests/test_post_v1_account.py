@@ -1,5 +1,7 @@
 import structlog
+from hamcrest import assert_that, has_properties, not_none
 
+from dm_api_account.apis.models.activate_registered_user_model import UserRole
 from dm_api_account.apis.models.register_new_user import Registration
 
 structlog.configure(
@@ -9,6 +11,16 @@ structlog.configure(
 )
 
 
-def test_post_v1_account(api):
-    api.account.post_v1_account(json=Registration())
-
+def test_post_v1_account(api, get_credentials):
+    response = api.account.post_v1_account(json=Registration(
+        login=get_credentials.login,
+        email=get_credentials.email,
+        password=get_credentials.password
+    ))
+    assert_that(response.resource, has_properties(
+        {
+            "login": get_credentials.login,
+            "roles": [UserRole.guest, UserRole.player]
+        }
+    ))
+    assert_that(response.resource.rating, not_none())
