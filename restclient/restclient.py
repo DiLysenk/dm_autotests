@@ -5,7 +5,7 @@ import uuid
 import curlify
 
 
-class Restclient:
+class RestClient:
     def __init__(self, host, headers=None):
         self.host = host
         self.session = session()

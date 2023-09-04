@@ -1,14 +1,14 @@
 import json
 
 from requests import Response
-from restclient.restclient import Restclient
+from restclient.restclient import RestClient
 from config import settings as cfg
 
 
 class MailhogApi:
     def __init__(self, host=cfg.user.mail_host):
         self.host = host
-        self.client = Restclient(host=host)
+        self.client = RestClient(host=host)
 
     def get_api_v2_messages(self, limit: int = 50) -> Response:
         """
