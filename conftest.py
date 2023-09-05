@@ -1,3 +1,4 @@
+from random import randint
 from time import sleep
 
 import pytest
@@ -7,6 +8,7 @@ import structlog
 from dm_api_account.apis.models.register_new_user import Registration
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailhogApi
+from config import settings as cfg
 
 structlog.configure(
     processors=[
@@ -17,8 +19,11 @@ structlog.configure(
 
 @pytest.fixture(scope='session')
 def get_credentials():
-    return Registration()
-
+    return Registration(
+        login=cfg.user.login + str(randint(0, 555)),
+        email=cfg.user.email + str(randint(0, 555)),
+        password=cfg.user.password
+    )
 
 @pytest.fixture()
 def api():
