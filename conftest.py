@@ -25,6 +25,7 @@ def get_credentials():
         password=cfg.user.password
     )
 
+
 @pytest.fixture()
 def api():
     return DmApiAccount()
