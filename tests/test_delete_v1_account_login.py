@@ -2,6 +2,11 @@ def test_delete_v1_account_login(api):
     """
     Logout as current user
     :return:
+    шаги:
+        - Регистрация пользователя
+        - Активация пользователя
+        - Авторизация пользователя, получение авторизационного токена
+        - Вызов метода разлогина с установленными заголовками в клиент или метод
     """
 
     headers = {
@@ -9,7 +14,6 @@ def test_delete_v1_account_login(api):
         'X-Dm-Bb-Render-Mode': '',
         'Accept': 'text/plain'
     }
-
     response = api.login.delete_v1_account_login(
         headers=headers
     )

@@ -12,7 +12,7 @@ structlog.configure(
 )
 
 
-def test_put_v1_account_email(api, get_credentials, activate_user):
+def test_put_v1_account_email(api, get_credentials):
     payload = {
         "login": get_credentials.login,
         "password": get_credentials.password,

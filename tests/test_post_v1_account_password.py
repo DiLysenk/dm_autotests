@@ -1,7 +1,7 @@
 from dm_api_account.apis.models.reset_registred_user_password_model import ResetPassword
 
 
-def test_post_v1_account_password(api, create_user, activate_user, get_credentials):
+def test_post_v1_account_password(api, create_user, get_credentials):
     """
     Reset registered user password
     :return:

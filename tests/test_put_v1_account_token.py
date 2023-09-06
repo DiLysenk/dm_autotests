@@ -14,9 +14,9 @@ structlog.configure(
 )
 
 
-def test_put_v1_account_token(api, activate_user, get_credentials):
+def test_put_v1_account_token(api, activate_user_and_get_token, get_credentials):
     api = DmApiAccount(host=cfg.user.host)
-    response = api.account.put_v1_account_token(token=activate_user)
+    response = api.account.put_v1_account_token(token=activate_user_and_get_token)
     assert_that(response.resource, has_properties(
         {
             "login": get_credentials.login,
