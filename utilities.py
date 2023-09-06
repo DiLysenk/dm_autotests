@@ -14,11 +14,10 @@ def validate_request_json(json: dict | BaseModel):
 
 def validate_status_code(response: requests.Response, status_code: int):
     with allure.step('Проверка валидации и статус кода'):
-        assert (
-                response.status_code == status_code
-        ), (f'Статус-код ответа должен быть равен {status_code},\n'
-            f'но он равен {response.status_code},\n'
-            f' {response.json()}')
+        assert response.status_code == status_code, \
+            (f'Статус-код ответа должен быть равен {status_code},\n'
+             f'но он равен {response.status_code},\n'
+             f' {response.json()}')
 
 
 def generate_random_string(length: int) -> str:
