@@ -1,7 +1,9 @@
 import structlog
+from hamcrest import has_properties, assert_that
+
 from config import settings as cfg
 
-from dm_api_account.apis.models.change_email_model import RequestChangeEmailModel
+from dm_api_account.apis.models.change_email_model import ChangeEmail
 
 structlog.configure(
     processors=[
@@ -16,5 +18,5 @@ def test_put_v1_account_email(api, get_credentials, activate_user):
         "password": get_credentials.password,
         "email": 'changed' + cfg.user.email
     }
-    response = api.account.put_v1_account_email(json=RequestChangeEmailModel(**payload))
-    assert response.status_code == 200, f'expected 200 but equals {response.status_code}'
+    response = api.account.put_v1_account_email(json=ChangeEmail(**payload))
+    assert_that(response.resource, has_properties({'login': get_credentials.login}))

@@ -1,4 +1,4 @@
-from dm_api_account.apis.models.reset_registred_user_password_model import RequestAccountPassword
+from dm_api_account.apis.models.reset_registred_user_password_model import ResetPassword
 
 
 def test_post_v1_account_password(api, create_user, activate_user, get_credentials):
@@ -9,7 +9,7 @@ def test_post_v1_account_password(api, create_user, activate_user, get_credentia
 
     payload = {
         "login": get_credentials.login,
-        "email": get_credentials.password
+        "email": get_credentials.email
     }
     headers = {
         'X-Dm-Auth-Token': '',
@@ -18,8 +18,8 @@ def test_post_v1_account_password(api, create_user, activate_user, get_credentia
         'Accept': 'text/plain'
     }
 
-    response = api.account.post_v1_account_password(
+    api.account.post_v1_account_password(
         headers=headers,
-        json=RequestAccountPassword(**payload)
+        json=ResetPassword(**payload)
     )
-    assert response.status_code == 200
+

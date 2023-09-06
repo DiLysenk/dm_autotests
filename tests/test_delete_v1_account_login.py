@@ -1,6 +1,3 @@
-
-
-
 def test_delete_v1_account_login(api):
     """
     Logout as current user
