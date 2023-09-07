@@ -12,11 +12,11 @@ structlog.configure(
 
 
 def test_post_v1_account(api, get_credentials):
-    response = api.account.post_v1_account(json=Registration(
+    response = api.account.register_new_user(
         login=get_credentials.login,
         email=get_credentials.email,
         password=get_credentials.password
-    ))
+    )
     assert_that(response.resource, has_properties(
         {
             "login": get_credentials.login,
@@ -24,3 +24,6 @@ def test_post_v1_account(api, get_credentials):
         }
     ))
     assert_that(response.resource.rating, not_none())
+    api.account.activate_registered_user()
+    api.login.login_user(login=get_credentials.login, password=get_credentials.password)
+

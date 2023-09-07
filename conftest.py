@@ -16,7 +16,7 @@ structlog.configure(
 )
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def get_credentials() -> Registration:
     return Registration(
         login=cfg.user.login + str(randint(0, 555)),
@@ -25,12 +25,12 @@ def get_credentials() -> Registration:
     )
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def api():
     return Facade(cfg.user.host)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def create_user(api, get_credentials):
     """
     :param get_credentials:
@@ -45,7 +45,7 @@ def create_user(api, get_credentials):
 #   todo удаление пользователя
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def activate_user(api, get_credentials, create_user):
     """
     :param api:
@@ -57,6 +57,6 @@ def activate_user(api, get_credentials, create_user):
     assert response.status_code == 200
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def get_token(api, get_credentials):
     return api.mailhog.get_token_by_login(get_credentials.login)

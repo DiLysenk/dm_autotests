@@ -1,5 +1,7 @@
 from dm_api_account.apis.models.change_email_model import ChangeEmail
+from dm_api_account.apis.models.change_registered_user_password_model import ChangePassword
 from dm_api_account.apis.models.register_new_user import Registration
+from dm_api_account.apis.models.reset_registred_user_password_model import ResetPassword
 
 
 class Account:
@@ -11,6 +13,7 @@ class Account:
         self.facade.account_api.client.session.headers.update(headers)
 
     def register_new_user(self, login: str, email: str, password: str):
+        # проверки зашиты
         response = self.facade.account_api.post_v1_account(
             json=Registration(
                 login=login,
@@ -32,11 +35,31 @@ class Account:
         response = self.facade.account_api.get_v1_account(**kwargs)
         return response
 
+    def change_user_password(self, login: str, token, old_password: str, new_password: str):
+        response = self.facade.account_api.put_v1_account_password(
+            json=ChangePassword(
+                login=login,
+                token=token,
+                old_password=old_password,
+                new_password=new_password
+            )
+        )
+        return response
+
     def change_user_email(self, login: str, password: str, email: str):
         response = self.facade.account_api.put_v1_account_email(
             json=ChangeEmail(
                 login=login,
                 password=password,
+                email=email
+            )
+        )
+        return response
+
+    def reset_user_password(self, login: str, email: str):
+        response = self.facade.account_api.post_v1_account_password(
+            json=ResetPassword(
+                login=login,
                 email=email
             )
         )
