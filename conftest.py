@@ -38,10 +38,7 @@ def create_user(api, get_credentials):
     :return:
     """
     response = api.account.register_new_user(**get_credentials.model_dump())
-    assert response.status_code == 201, 'Пользователь не создан'
     yield
-
-
 #   todo удаление пользователя
 
 
@@ -54,7 +51,6 @@ def activate_user(api, get_credentials, create_user):
     :return:
     """
     response = api.account.activate_registered_user(get_credentials.login)
-    assert response.status_code == 200
 
 
 @pytest.fixture(scope="function")

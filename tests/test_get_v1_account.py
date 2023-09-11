@@ -18,6 +18,7 @@ def test_get_v1_account(api, get_credentials):
     )
     api.account.set_headers(headers=token_like_header)
     api.login.set_headers(headers=token_like_header)
+    api.account.get_current_user_info()
 
 
 

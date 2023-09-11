@@ -5,7 +5,6 @@ from hamcrest import assert_that, has_properties, not_none, has_string, starts_w
 
 from config import settings as cfg
 from dm_api_account.apis.models.activate_registered_user_model import UserRole
-from services.dm_api_account import DmApiAccount
 
 structlog.configure(
     processors=[
@@ -15,7 +14,7 @@ structlog.configure(
 
 
 def test_put_v1_account_token(api, activate_user_and_get_token, get_credentials):
-    api = DmApiAccount(host=cfg.user.host)
+    api = api.account(host=cfg.user.host)
     response = api.account.put_v1_account_token(token=activate_user_and_get_token)
     assert_that(response.resource, has_properties(
         {
