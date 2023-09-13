@@ -15,7 +15,6 @@ structlog.configure(
 
 
 def test_post_v1_account(api, get_credentials):
-
     db = DmDatabase(user='postgres', password='admin', host='5.63.153.31', database='dm3.5')
     # регистрация
     response = api.account.register_new_user(
