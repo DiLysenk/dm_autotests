@@ -1,7 +1,24 @@
-def test_get_v1_account(create_user, activate_user, api):
-    headers = {
-        'X-Dm-Auth-Token': 'IQJh+zgzF5DL+x6PqzFdX34Z+5M8mulgP5ABi3OaCOYk+Pog0kQxnAdhA2dxLo0691oj1mFZYBTrzsyQsf5gga4so7MV8ezvh0HN87pPF6HlQe3SPa6MRUJQtCzejYc0UKhD4Kk/sj0=',
-        'X-Dm-Bb-Render-Mode': '',
-        'Accept': 'text/plain'
-    }
-    api.account.get_v1_account(headers=headers)
+def test_get_v1_account(api, get_credentials):
+    """
+    Get current user:
+        - Регистрация пользователя
+        - Активация пользователя
+        - Авторизация пользователя и получение авторизационного токена
+        - Получить информацию о пользователе (установить заголовки либо через клиент, передавая напрямую в метод)
+    """
+    api.account.register_new_user(
+        login=get_credentials.login,
+        email=get_credentials.email,
+        password=get_credentials.password,
+    )
+    api.account.activate_registered_user(login=get_credentials.login)
+    token_like_header = api.login.get_auth_token(
+        login=get_credentials.login,
+        password=get_credentials.password,
+    )
+    api.account.set_headers(headers=token_like_header)
+    api.login.set_headers(headers=token_like_header)
+    api.account.get_current_user_info()
+
+
+

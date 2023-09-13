@@ -1,16 +1,12 @@
-def test_delete_v1_account_login(api):
-    """
-    Logout as current user
-    :return:
-    """
-
-    headers = {
-        'X-Dm-Auth-Token': 'IQJh+zgzF5DL+x6PqzFdX34Z+5M8mulgP5ABi3OaCOYk+Pog0kQxnAdhA2dxLo0691oj1mFZYBTrzsyQsf5gga4so7MV8ezvh0HN87pPF6HlQe3SPa6MRUJQtCzejYc0UKhD4Kk/sj0=',
-        'X-Dm-Bb-Render-Mode': '',
-        'Accept': 'text/plain'
-    }
-
-    response = api.login.delete_v1_account_login(
-        headers=headers
-    )
-    assert response.status_code == 204
+def test_delete_v1_account_login(api, get_credentials):
+    api.account.register_new_user(
+        login=get_credentials.login,
+        email=get_credentials.email,
+        password=get_credentials.password)
+    api.account.activate_registered_user(login=get_credentials.login)
+    api.login.login_user(
+        login=get_credentials.login,
+        password=get_credentials.password)
+    token = api.login.get_auth_token(login=get_credentials.login, password=get_credentials.password)
+    api.login.set_headers(headers=token)
+    api.login.logout_user()

@@ -28,3 +28,17 @@ def generate_random_string(length: int) -> str:
     except TypeError as e:
         msg = 'need integer'
         raise AssertionError(msg) from e
+
+
+def reiterate(fn):
+    def wrapper(*args, **kwargs):
+        for i in range(5):
+            response = fn(*args, **kwargs)
+            emails = response.json()['items']
+            if len(emails) < 5:
+                print(f'attempt{i}')
+                continue
+            else:
+                return response
+
+    return wrapper
