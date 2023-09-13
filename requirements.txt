@@ -1,9 +1,11 @@
-pytest
+pytest~=7.4.0
 allure-pytest
-requests
-dynaconf
-pydantic
+requests~=2.31.0
+dynaconf~=3.2.1
+pydantic~=2.1.1
 pytest-lazy-fixture
-structlog
-curlify
+structlog~=23.1.0
+curlify~=2.2.1
 pyhamcrest
+records~=0.5.3
+psycopg2-binary
