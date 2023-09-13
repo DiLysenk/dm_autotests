@@ -10,7 +10,7 @@ class Account:
         self.facade: Facade = facade
 
     def set_headers(self, headers):
-        self.facade.account_api.client.session.headers.update(headers)
+        self.facade.account_api.session.headers.update(headers)
 
     def register_new_user(self, login: str, email: str, password: str):
         # проверки зашиты

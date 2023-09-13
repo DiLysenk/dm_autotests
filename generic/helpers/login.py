@@ -7,7 +7,7 @@ class Login:
         self.facade: Facade = facade
 
     def set_headers(self, headers):
-        self.facade.login_api.client.session.headers.update(headers)
+        self.facade.login_api.session.headers.update(headers)
 
     def login_user(self, login: str, password: str, remember_me: bool = True):
         response = self.facade.login_api.post_v1_account_login(
