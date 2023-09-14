@@ -17,7 +17,7 @@ class Login:
                 rememberMe=remember_me
             )
         )
-        return UserEnvelope.model_validate(response.json())
+        return response
 
     def get_auth_token(self, login: str, password: str, remember_me: bool = True):
         response = self.login_user(
