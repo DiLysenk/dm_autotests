@@ -1,4 +1,4 @@
-from dm_api_account.apis.models.auth_via_credentials import LoginCredentials
+from dm_api_account.apis.models.auth_via_credentials import LoginCredentials, UserEnvelope
 
 
 class Login:
@@ -17,7 +17,7 @@ class Login:
                 rememberMe=remember_me
             )
         )
-        return response
+        return UserEnvelope.model_validate(response.json())
 
     def get_auth_token(self, login: str, password: str, remember_me: bool = True):
         response = self.login_user(
