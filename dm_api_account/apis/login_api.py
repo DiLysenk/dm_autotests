@@ -25,7 +25,7 @@ class LoginApi:
         )
         validate_status_code(response, status_code)
         if response.status_code == status_code:
-            return UserEnvelope.model_validate(response.json())
+            UserEnvelope.model_validate(response.json())
         return response
 
     def delete_v1_account_login(self, **kwargs):

@@ -111,8 +111,8 @@ class UserDetails(BaseModel):
     original_picture_url: Optional[StrictStr] = Field(
         None, alias='originalPictureUrl', description='URL of profile picture original'
     )
-    info: Optional[InfoBbText] = None
-    settings: Optional[UserSettings] = None
+    info: Optional[Any] = None
+    settings: Optional[UserSettings] | None = None
 
 
 class UserDetailsEnvelope(BaseModel):
