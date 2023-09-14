@@ -41,3 +41,4 @@ def test_post_v1_account(api, get_credentials):
         }
     ))
     db.delete_user_by_login(get_credentials.login)
+
