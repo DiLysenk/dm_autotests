@@ -9,3 +9,5 @@ curlify~=2.2.1
 pyhamcrest
 records~=0.5.3
 psycopg2-binary
+sqlalchemy
+sqlacodegen
