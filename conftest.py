@@ -6,6 +6,9 @@ import pytest
 import structlog
 
 from dm_api_account.apis.models.register_new_user import Registration
+from generic.helpers.dm_db import DmDatabase
+from generic.helpers.mailhog import MailhogApi
+from generic.helpers.orm_db import OrmDatabase
 from services.dm_api_account import Facade
 from config import settings as cfg
 
@@ -25,7 +28,7 @@ def get_credentials() -> Registration:
     )
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def api():
     return Facade(cfg.user.host)
 
@@ -39,6 +42,8 @@ def create_user(api, get_credentials):
     """
     response = api.account.register_new_user(**get_credentials.model_dump())
     yield
+
+
 #   todo удаление пользователя
 
 
@@ -56,3 +61,27 @@ def activate_user(api, get_credentials, create_user):
 @pytest.fixture(scope="function")
 def get_token(api, get_credentials):
     return api.mailhog.get_token_by_login(get_credentials.login)
+
+
+@pytest.fixture()
+def mailhog(api):
+    return MailhogApi(cfg.user.host)
+
+
+@pytest.fixture()
+def dm_api_facade(mailhog):
+    return Facade(cfg.user.host, mailhog=mailhog)
+
+
+@pytest.fixture()
+def dm_db():
+    db = DmDatabase(user='postgres', password='admin', host='5.63.153.31', database='dm3.5')
+    return db
+
+
+@pytest.fixture()
+def orm_db(get_credentials):
+    orm = OrmDatabase(user='postgres', password='admin', host='5.63.153.31', database='dm3.5')
+    yield orm
+    orm.delete_user_by_login(login=get_credentials.login)
+    orm.db.close_connection()

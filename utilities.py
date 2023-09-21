@@ -4,6 +4,8 @@ from random import choice
 import allure
 import requests
 from pydantic import BaseModel
+from string import ascii_letters, digits
+import random
 
 
 def validate_request_json(json: dict | BaseModel):
@@ -42,3 +44,11 @@ def reiterate(fn):
                 return response
 
     return wrapper
+
+
+def random_string(count_of_symbols=8):
+    symbols = ascii_letters + digits
+    string = ''
+    for _ in range(count_of_symbols):
+        string += random.choice(symbols)
+    return string

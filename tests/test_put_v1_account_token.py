@@ -6,12 +6,6 @@ from hamcrest import assert_that, has_properties, not_none, has_string, starts_w
 from config import settings as cfg
 from dm_api_account.apis.models.activate_registered_user_model import UserRole
 
-structlog.configure(
-    processors=[
-        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
-    ]
-)
-
 
 def test_put_v1_account_token(api, activate_user_and_get_token, get_credentials):
     api = api.account(host=cfg.user.host)

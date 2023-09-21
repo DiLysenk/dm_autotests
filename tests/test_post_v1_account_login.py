@@ -3,12 +3,6 @@ from hamcrest import assert_that, has_properties
 
 from dm_api_account.apis.models.auth_via_credentials import LoginCredentials, UserRole
 
-structlog.configure(
-    processors=[
-        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
-    ]
-)
-
 
 def test_post_v1_account_login(api, get_credentials):
     payload = LoginCredentials(
