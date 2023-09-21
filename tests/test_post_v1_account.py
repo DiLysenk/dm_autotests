@@ -1,8 +1,7 @@
 from collections import namedtuple
 
 import pytest
-import structlog
-from hamcrest import assert_that, has_properties, not_none
+from hamcrest import assert_that, has_properties
 
 from dm_api_account.apis.models.activate_registered_user_model import UserRole, UserEnvelope
 from utilities import random_string
