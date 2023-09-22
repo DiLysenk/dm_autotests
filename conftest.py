@@ -8,6 +8,7 @@ import pytest
 import structlog
 
 from dm_api_account.apis.models.register_new_user import Registration
+from generic.assertions.test_post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailhogApi
 from generic.helpers.orm_db import OrmDatabase
@@ -125,3 +126,8 @@ def pytest_addoption(parser):
     parser.addoption('--env', action='store', default='stg')
     for option in options:
         parser.addoption(f'--{option}', action='store', default=None)
+
+
+@pytest.fixture
+def assertions(orm_db):
+    return AssertionsPostV1Account(orm_db)
