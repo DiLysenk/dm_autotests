@@ -1,6 +1,5 @@
 from collections import namedtuple
 from random import randint
-from time import sleep
 
 import pytest
 
@@ -91,7 +90,7 @@ def orm_db(get_credentials):
 @pytest.fixture()
 def prepare_user(get_credentials, dm_api_facade, dm_orm):
     data = namedtuple('user', 'login, email, password')
-    User = data(login=get_credentials.login,
+    user = data(login=get_credentials.login,
                 email=get_credentials.email,
                 password=get_credentials.password
                 )
