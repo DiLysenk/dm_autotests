@@ -1,3 +1,4 @@
+from collections import namedtuple
 from random import randint
 from time import sleep
 
@@ -74,7 +75,7 @@ def dm_api_facade(mailhog):
 
 
 @pytest.fixture()
-def dm_db():
+def dm_db() -> DmDatabase:
     db = DmDatabase(user='postgres', password='admin', host='5.63.153.31', database='dm3.5')
     return db
 
@@ -85,3 +86,17 @@ def orm_db(get_credentials):
     yield orm
     orm.delete_user_by_login(login=get_credentials.login)
     orm.db.close_connection()
+
+
+@pytest.fixture()
+def prepare_user(get_credentials, dm_api_facade, dm_orm):
+    data = namedtuple('user', 'login, email, password')
+    User = data(login=get_credentials.login,
+                email=get_credentials.email,
+                password=get_credentials.password
+                )
+    dm_orm.delete_user_by_login(login=User.login)
+    dataset = dm_orm.get_user_by_login(login=User.login)
+    assert len(dataset) == 0
+    dm_api_facade.mailhog.delete_all_messages()
+    return User
