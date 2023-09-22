@@ -11,3 +11,4 @@ records~=0.5.3
 psycopg2-binary
 sqlalchemy
 sqlacodegen
+vyper-config

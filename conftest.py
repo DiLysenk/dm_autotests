@@ -1,5 +1,7 @@
 from collections import namedtuple
 from random import randint
+from vyper import v
+from pathlib import Path
 
 import pytest
 
@@ -99,3 +101,27 @@ def prepare_user(get_credentials, dm_api_facade, dm_orm):
     assert len(dataset) == 0
     dm_api_facade.mailhog.delete_all_messages()
     return user
+
+
+options = (
+    'service.dm_api_account',
+    'service.mailhog',
+    'database.dm3_5.host'
+)
+
+
+@pytest.fixture(autouse=True)
+def set_config(request):
+    config = Path(__file__).parent.joinpath('config')
+    config_name = request.config.getoption('--env')
+    v.set_config_name(config_name)
+    v.add_config_path(config)
+    v.read_in_config()
+    for option in options:
+        v.set(option, request.config.getoption(f'--{option}'))
+
+
+def pytest_addoption(parser):
+    parser.addoption('--env', action='store', default='stg')
+    for option in options:
+        parser.addoption(f'--{option}', action='store', default=None)
