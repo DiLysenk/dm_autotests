@@ -94,8 +94,8 @@ def prepare_user(get_credentials, dm_api_facade, dm_orm):
                 email=get_credentials.email,
                 password=get_credentials.password
                 )
-    dm_orm.delete_user_by_login(login=User.login)
-    dataset = dm_orm.get_user_by_login(login=User.login)
+    dm_orm.delete_user_by_login(login=user.login)
+    dataset = dm_orm.get_user_by_login(login=user.login)
     assert len(dataset) == 0
     dm_api_facade.mailhog.delete_all_messages()
-    return User
+    return user
