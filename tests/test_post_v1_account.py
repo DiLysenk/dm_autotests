@@ -61,10 +61,6 @@ def test_create_and_activated_user_with_random_params(
     )
     if status_code == 201:
         dataset = orm_db.get_user_by_login(login)
-        # for row in dataset:
-        #     assert row.Login == login, f'User {login} not registered'
-        #     assert row.Activated is False, f'User {login} was activated'
-
         for row in dataset:
             assert_that(row, has_entries(
                 {
