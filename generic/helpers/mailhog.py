@@ -1,6 +1,7 @@
 import json
 import time
 
+import allure
 from requests import Response
 
 from restclient.restclient import RestClient
@@ -65,3 +66,5 @@ class MailhogApi:
                 return token
         time.sleep(2)
         return self.get_token_by_login(login=login, attempt=attempt - 1)
+
+

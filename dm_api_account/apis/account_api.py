@@ -1,3 +1,4 @@
+import allure
 from requests import session, Response
 
 from dm_api_account.apis.models.activate_registered_user_model import UserEnvelope
@@ -24,11 +25,12 @@ class AccountApi:
         Register new user
         :return:
         """
-        response = self.session.post(
-            url=f"{self.host}/v1/account",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step("Регистрация нового пользователя"):
+            response = self.session.post(
+                url=f"{self.host}/v1/account",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         return response
 
@@ -52,11 +54,11 @@ class AccountApi:
         Activate registered user
         :return:
         """
-
-        response = self.session.put(
-            url=f"{self.host}/v1/account/{token}",
-            **kwargs
-        )
+        with allure.step("Активация пользователя"):
+            response = self.session.put(
+                url=f"{self.host}/v1/account/{token}",
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if validate_status_code(response, status_code):
             return UserEnvelope.model_validate(response.json())
