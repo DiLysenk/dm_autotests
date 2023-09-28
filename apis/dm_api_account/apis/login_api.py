@@ -1,7 +1,7 @@
 import allure
 from requests import session, Response
 
-from dm_api_account.apis.models.auth_via_credentials import UserEnvelope
+from apis.dm_api_account.apis.models.auth_via_credentials import UserEnvelope
 from utilities import validate_request_json, validate_status_code
 
 

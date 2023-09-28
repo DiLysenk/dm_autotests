@@ -1,7 +1,7 @@
-from dm_api_account.apis.models.change_email_model import ChangeEmail
-from dm_api_account.apis.models.change_registered_user_password_model import ChangePassword
-from dm_api_account.apis.models.register_new_user import Registration
-from dm_api_account.apis.models.reset_registred_user_password_model import ResetPassword
+from apis.dm_api_account.apis.models import ChangeEmail
+from apis.dm_api_account.apis.models import ChangePassword
+from apis.dm_api_account.apis.models import Registration
+from apis.dm_api_account.apis.models import ResetPassword
 
 
 class Account:
