@@ -7,7 +7,7 @@ import structlog
 
 def allure_attach_db(fn):
     def wrapper(*args, **kwargs):
-        query = str(args[1].compile(compile_kwargs={"literal_binds": True}))
+        query = kwargs.get('query')
         allure.attach(
             str(query),
             name='query',

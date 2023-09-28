@@ -1,3 +1,4 @@
+import allure
 from requests import session, Response
 
 from dm_api_account.apis.models.auth_via_credentials import UserEnvelope
@@ -17,12 +18,12 @@ class LoginApi:
         Authenticate via credentials
         :return:
         """
-
-        response = self.session.post(
-            url=f"{self.host}/v1/account/login",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step("Аутентификация"):
+            response = self.session.post(
+                url=f"{self.host}/v1/account/login",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if response.status_code == status_code:
             UserEnvelope.model_validate(response.json())
@@ -33,11 +34,11 @@ class LoginApi:
         Logout as current user
         :return:
         """
-
-        response = self.session.delete(
-            url=f"{self.host}/v1/account/login",
-            **kwargs
-        )
+        with allure.step("Логаут текущего пользователя"):
+            response = self.session.delete(
+                url=f"{self.host}/v1/account/login",
+                **kwargs
+            )
 
         return response
 
@@ -46,11 +47,11 @@ class LoginApi:
         Logout from every device
         :return:
         """
-
-        response = self.session.delete(
-            url=f"{self.host}/v1/account/login/all",
-            **kwargs
-        )
+        with allure.step("Логаут пользователя из всех устройств"):
+            response = self.session.delete(
+                url=f"{self.host}/v1/account/login/all",
+                **kwargs
+            )
         validate_status_code(response, status_code)
 
         return response
