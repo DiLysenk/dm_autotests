@@ -76,18 +76,27 @@ def dm_api_facade(mailhog):
     return Facade(cfg.user.host, mailhog=mailhog)
 
 
-@pytest.fixture()
-def dm_db() -> DmDatabase:
-    db = DmDatabase(user='postgres', password='admin', host='5.63.153.31', database='dm3.5')
-    return db
+@pytest.fixture
+def orm_db():
+    orm_db = OrmDatabase(
+        user=v.get('database.dm3_5.user'),
+        password=v.get('database.dm3_5.password'),
+        host=v.get('database.dm3_5.host'),
+        database=v.get('database.dm3_5.database')
+    )
+    yield orm_db
+    orm_db.db.close_connection()
 
 
 @pytest.fixture()
-def orm_db(get_credentials):
-    orm = OrmDatabase(user='postgres', password='admin', host='5.63.153.31', database='dm3.5')
-    yield orm
-    orm.delete_user_by_login(login=get_credentials.login)
-    orm.db.close_connection()
+def dm_db():
+    db = DmDatabase(
+        user=v.get('database.dm3_5.user'),
+        password=v.get('database.dm3_5.password'),
+        host=v.get('database.dm3_5.host'),
+        database=v.get('database.dm3_5.database'))
+    yield db
+    db.db.db.close()
 
 
 @pytest.fixture()
