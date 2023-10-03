@@ -1,6 +1,28 @@
 import uuid
+
+import allure
 import records
 import structlog
+
+
+def allure_attach_db(fn):
+    def wrapper(*args, **kwargs):
+        query =  kwargs.get('query') or args[0]
+        allure.attach(
+            str(query),
+            name='query',
+            attachment_type=allure.attachment_type.TEXT
+        )
+        dataset = fn(*args, **kwargs)
+        if dataset is not None:
+            allure.attach(
+                str(dataset),
+                name='dataset',
+                attachment_type=allure.attachment_type.TEXT
+            )
+        return dataset
+
+    return wrapper
 
 
 class DBClient:
@@ -9,6 +31,7 @@ class DBClient:
         self.db = records.Database(connection_string, isolation_level=isolation_level)
         self.log = structlog.getLogger(self.__class__.__name__).bind(service='db')
 
+    @allure_attach_db
     def send_query(self, query):
         log = self.log.bind(event_id=str(uuid.uuid4()))
         log.msg(
@@ -22,6 +45,7 @@ class DBClient:
         )
         return dataset
 
+    @allure_attach_db
     def send_bulk_query(self, query):
         log = self.log.bind(event_id=str(uuid.uuid4()))
         log.msg(

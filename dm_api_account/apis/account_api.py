@@ -1,3 +1,4 @@
+import allure
 from requests import session, Response
 
 from dm_api_account.apis.models.activate_registered_user_model import UserEnvelope
@@ -24,11 +25,12 @@ class AccountApi:
         Register new user
         :return:
         """
-        response = self.session.post(
-            url=f"{self.host}/v1/account",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step("Регистрация нового пользователя"):
+            response = self.session.post(
+                url=f"{self.host}/v1/account",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         return response
 
@@ -37,11 +39,11 @@ class AccountApi:
         Get current user
         :return:
         """
-
-        response: Response = self.session.get(
-            url=f"{self.host}/v1/account",
-            **kwargs
-        )
+        with allure.step("Получить информацию о пользователе"):
+            response: Response = self.session.get(
+                url=f"{self.host}/v1/account",
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if response.status_code == status_code:
             return UserDetailsEnvelope.model_validate(response.json())
@@ -52,11 +54,11 @@ class AccountApi:
         Activate registered user
         :return:
         """
-
-        response = self.session.put(
-            url=f"{self.host}/v1/account/{token}",
-            **kwargs
-        )
+        with allure.step("Активация пользователя"):
+            response = self.session.put(
+                url=f"{self.host}/v1/account/{token}",
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if validate_status_code(response, status_code):
             return UserEnvelope.model_validate(response.json())
@@ -69,12 +71,12 @@ class AccountApi:
         :param json: reset_password_model
         :return:
         """
-
-        response = self.session.post(
-            url=f"{self.host}/v1/account/password",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step("Сброс пароля пользователя"):
+            response = self.session.post(
+                url=f"{self.host}/v1/account/password",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if response.status_code == status_code:
             return UserEnvelope.model_validate(response.json())
@@ -86,12 +88,12 @@ class AccountApi:
         :param :json change_password_model
         :return:
         """
-
-        response = self.session.put(
-            url=f"{self.host}/v1/account/password",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step("Смена пароля пользователя"):
+            response = self.session.put(
+                url=f"{self.host}/v1/account/password",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if response.status_code == status_code:
             return UserEnvelope.model_validate(response.json())
@@ -104,11 +106,12 @@ class AccountApi:
         :param json: change_email_model
         :return:
         """
-        response = self.session.put(
-            url=f"{self.host}/v1/account/email",
-            json=validate_request_json(json),
-            **kwargs
-        )
+        with allure.step("Редактирование email пользователя"):
+            response = self.session.put(
+                url=f"{self.host}/v1/account/email",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         if response.status_code == status_code:
             return UserEnvelope.model_validate(response.json())
