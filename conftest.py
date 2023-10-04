@@ -7,7 +7,7 @@ import pytest
 
 import structlog
 
-from apis.dm_api_account import Registration
+from apis.dm_api_account.apis.models.register_new_user import Registration
 from generic.assertions.test_post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailhogApi
@@ -34,7 +34,7 @@ def get_credentials() -> Registration:
 
 @pytest.fixture()
 def api():
-    return Facade(cfg.user.host)
+    return Facade(v.get('service.dm_api_account'))
 
 
 @pytest.fixture(scope="function")

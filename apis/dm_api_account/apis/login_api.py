@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import allure
 from requests import session, Response
 
-from apis.dm_api_account import UserEnvelope
+from apis.dm_api_account.apis.models.activate_registered_user_model import UserEnvelope
 from utilities import validate_request_json, validate_status_code
 
 
