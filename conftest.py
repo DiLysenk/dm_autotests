@@ -68,15 +68,15 @@ def get_token(api, get_credentials):
 
 @pytest.fixture()
 def mailhog(api):
-    return MailhogApi(cfg.user.host)
+    return MailhogApi(v.get('service.mailhog'))
 
 
 @pytest.fixture()
 def dm_api_facade(mailhog):
-    return Facade(cfg.user.host, mailhog=mailhog)
+    return Facade(v.get('service.dm_api_account', mailhog=mailhog))
 
 
-@pytest.fixture
+@pytest.fixture()
 def orm_db():
     orm_db = OrmDatabase(
         user=v.get('database.dm3_5.user'),
