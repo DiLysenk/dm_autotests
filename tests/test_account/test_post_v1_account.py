@@ -1,10 +1,7 @@
-from collections import namedtuple
-
 import allure
 import pytest
-from hamcrest import assert_that, has_properties, has_entries
+from hamcrest import assert_that, has_entries
 
-from dm_api_account.apis.models.activate_registered_user_model import UserRole, UserEnvelope
 from utilities import random_string
 
 

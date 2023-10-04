@@ -1,4 +1,4 @@
-from dm_api_account.apis.models.auth_via_credentials import LoginCredentials, UserEnvelope
+from apis.dm_api_account import LoginCredentials
 
 
 class Login:

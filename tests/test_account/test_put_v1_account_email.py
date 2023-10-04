@@ -1,9 +1,8 @@
-import structlog
 from hamcrest import has_properties, assert_that
 
 from config import settings as cfg
 
-from dm_api_account.apis.models.change_email_model import ChangeEmail
+from apis.dm_api_account import ChangeEmail
 
 
 

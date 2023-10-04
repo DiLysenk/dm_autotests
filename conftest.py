@@ -7,13 +7,14 @@ import pytest
 
 import structlog
 
-from dm_api_account.apis.models.register_new_user import Registration
+from apis.dm_api_account import Registration
 from generic.assertions.test_post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailhogApi
 from generic.helpers.orm_db import OrmDatabase
 from services.dm_api_account import Facade
 from config import settings as cfg
+from data.post_v1_account import PostV1AccountData as user_data
 
 structlog.configure(
     processors=[
@@ -102,9 +103,9 @@ def dm_db():
 @pytest.fixture()
 def prepare_user(get_credentials, dm_api_facade, dm_orm):
     data = namedtuple('user', 'login, email, password')
-    user = data(login=get_credentials.login,
-                email=get_credentials.email,
-                password=get_credentials.password
+    user = data(login=user_data.login,
+                email=user_data.email,
+                password=user_data.password
                 )
     dm_orm.delete_user_by_login(login=user.login)
     dataset = dm_orm.get_user_by_login(login=user.login)
