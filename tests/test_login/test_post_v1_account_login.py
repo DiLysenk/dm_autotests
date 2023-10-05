@@ -1,11 +1,11 @@
 from hamcrest import assert_that, has_properties
 
-from apis.dm_api_account import LoginCredentials, UserRole
+from apis.dm_api_account.apis.models.auth_via_credentials import LoginCredentials, UserRole
 
 
 def test_post_v1_account_login(api, get_credentials):
     payload = LoginCredentials(
-        login=get_credentials.login,
+        login=  get_credentials.login,
         password=get_credentials.password,
         rememberMe=True
     )

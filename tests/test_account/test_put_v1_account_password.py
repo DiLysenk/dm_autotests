@@ -1,4 +1,4 @@
-from apis.dm_api_account import ChangePassword
+from apis.dm_api_account.apis.models.change_registered_user_password_model import ChangePassword
 
 
 def test_put_v1_account_password(api, create_user, activate_user_and_get_token, get_credentials):

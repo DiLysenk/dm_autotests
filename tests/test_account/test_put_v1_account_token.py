@@ -2,8 +2,8 @@ from datetime import datetime
 
 from hamcrest import assert_that, has_properties, not_none, has_string, starts_with
 
+from apis.dm_api_account.apis.models.activate_registered_user_model import UserRole
 from config import settings as cfg
-from apis.dm_api_account import UserRole
 
 
 def test_put_v1_account_token(api, activate_user_and_get_token, get_credentials):
