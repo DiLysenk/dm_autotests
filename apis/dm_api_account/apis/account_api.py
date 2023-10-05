@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import allure
 from requests import session, Response
 
-from apis.dm_api_account import UserDetailsEnvelope
-from apis.dm_api_account import Registration
-from apis.dm_api_account import UserEnvelope
+from apis.dm_api_account.apis.models.activate_registered_user_model import UserEnvelope
+from apis.dm_api_account.apis.models.get_current_user_model import UserDetailsEnvelope
+from apis.dm_api_account.apis.models.register_new_user import Registration
 from utilities import validate_request_json, validate_status_code
 
 
