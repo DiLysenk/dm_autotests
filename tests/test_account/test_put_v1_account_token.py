@@ -2,7 +2,7 @@ from datetime import datetime
 
 from hamcrest import assert_that, has_properties, not_none, has_string, starts_with
 
-from apis.dm_api_account.apis.models.activate_registered_user_model import UserRole
+from dm_api_account.apis.models.activate_registered_user_model import UserRole
 from config import settings as cfg
 
 

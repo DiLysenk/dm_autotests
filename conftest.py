@@ -7,7 +7,7 @@ import pytest
 
 import structlog
 
-from apis.dm_api_account.apis.models.register_new_user import Registration
+from dm_api_account.apis.models.register_new_user import Registration
 from generic.assertions.test_post_v1_account import AssertionsPostV1Account
 from generic.helpers.dm_db import DmDatabase
 from generic.helpers.mailhog import MailhogApi
